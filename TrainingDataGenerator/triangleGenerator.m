@@ -90,7 +90,7 @@ function [boxes] = triangleGenerator(n, varargin)
     % center x coord
     boxes(:, 1) = (leftBond + rightBond) / 2 / imageWidth;
     % center y coord
-    boxes(:, 2) = (lowerBond + upperBond) / 2 / imageHeight;
+    boxes(:, 2) = 1 - (lowerBond + upperBond) / 2 / imageHeight;
     % width
     boxes(:, 3) = (rightBond - leftBond) / imageWidth;
     % height
