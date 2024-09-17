@@ -24,12 +24,7 @@ function [boxes] = triangleGenerator(n, varargin)
     rightSidePloarAngleRange = ip.Results.rightSidePloarAngleRange;
     topAngleRange = ip.Results.topAngleRange;
 
-
-    % 2. set length range of 2 sides
-    % 3. set angle range of 2 sides
-    % 4. random pick 2 sides for all tops.
-    % 5. plot all trangles.
-    % optional: make sure some overlapped trangles.
+    % TODO: make sure some overlapped trangles.
 
     % the figure will preserve a imageWidth:imageHeight ratio. so the trangle tops will be
     % limitied in the band of [2/5, 4/5] in y axis range.
@@ -95,7 +90,7 @@ function [boxes] = triangleGenerator(n, varargin)
     % center x coord
     boxes(:, 1) = (leftBond + rightBond) / 2 / imageWidth;
     % center y coord
-    boxes(:, 2) = 1 - (lowerBond + upperBond) / 2 / imageHeight;
+    boxes(:, 2) = (lowerBond + upperBond) / 2 / imageHeight;
     % width
     boxes(:, 3) = (rightBond - leftBond) / imageWidth;
     % height
