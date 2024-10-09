@@ -1,5 +1,5 @@
 # Define the paths to your training and validation datasets
-path: ./test2  # Base directory where images and labels are stored
+path: ./trainChorus  # Base directory where images and labels are stored
 
 train: ./images/train      # Relative path from 'path' to training images
 val: ./images/val          # Relative path from 'path' to validation images
@@ -9,4 +9,4 @@ nc: 1  # Number of classes (modify according to your dataset)
 
 # Class names
 names: 
-  0: triangle  # Replace 'class1' with your actual class name
+  0: wave  # Replace 'class1' with your actual class name
