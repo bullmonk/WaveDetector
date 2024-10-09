@@ -1,5 +1,5 @@
 % load data.
-coords = load("chorus/chorus_label.mat").chorus_label;
+coords = load("chorus_label.mat").chorus_label;
 
 
 for id = 1:size(coords, 1)
