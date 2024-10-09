@@ -32,6 +32,6 @@ function [] = row2f(row)
 
     T = array2table(box);
 
-    writetable(T, target, "WriteVariableNames", false);
+    writetable(T, target, "WriteVariableNames", false, "Delimiter", ' ');
 
 end
