@@ -1,4 +1,4 @@
-function [] = row2f(row)
+function [] = row2f(row, oldPrefix, newPrefix)
 % write table row to file.
 %   row: 1 row table
 %     - cols: start_time, end_time, start_frequency, end_frequency, fce,
@@ -16,7 +16,7 @@ function [] = row2f(row)
 
     % target text file.
     target = fullfile("trainChorus", "labels", "train", ...
-        strrep(strrep(row.name, 'snr_sweep', 'waveform_fft'), 'png', 'txt'));
+        strrep(strrep(row.name, oldPrefix, newPrefix), 'png', 'txt'));
 
     % box.
     cx = (p1x + p2x) / 2;
