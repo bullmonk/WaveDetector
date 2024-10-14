@@ -1,15 +1,7 @@
-folderPath = 'labels';  % Replace with the path to your folder
-files = dir(folderPath);  % Get all files and folders in the folder
+files = recursiveDir('../labels', 'FileType', '.txt');
 
-% Filter out the '.' and '..' (current and parent directory)
-files = files(~ismember({files.name}, {'.', '..', '.DS_Store'}));
+catname = @(i) fullfile(files(i).folder, files(i).name);
+fns = arrayfun(catname, 1:size(files, 1), 'UniformOutput',false);
 
-% Loop to display all file names
-for i = 1:length(files)
-    if ~files(i).isdir  % Check if it is not a folder
-        disp(files(i).name)  % Display file name
-    else
-        subfiles = dir(files(i));
-        
-    end
-end
+rewrite = @(i) yFlipper(fns{i});
+arrayfun(rewrite, 1:size(fns, 2));
