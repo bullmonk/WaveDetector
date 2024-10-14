@@ -6,3 +6,6 @@
 **/runs/
 **/test/
 **/chorus/
+**/*.mat
+**/*.csv
+**/*.txt
