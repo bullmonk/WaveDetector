@@ -1,4 +1,10 @@
-function [totOrigin, totPred, TP_cnt, FP_cnt, FN_cnt] = markPairBox(originTbl, predTbl, IoUthres)
+function [tbl, cnt1, cnt2, cnt3, cnt4] = markPairBox(originTbl, predTbl, IoUthres)
+% for the last column of tbl, marker:
+% value 1: box from origin, that has been predicted.
+% value 2: box from origin, that has not been predicted.
+% value 3: box from predict, that miss all origin.
+% value 4: box from predict, that hit at least one origin.
+
     totOrigin = size(originTbl, 1);
     totPred = size(predTbl, 1);
 
@@ -15,15 +21,22 @@ function [totOrigin, totPred, TP_cnt, FP_cnt, FN_cnt] = markPairBox(originTbl, p
     ground = zeros(totPred, totOrigin);
     ground = ground + areaPred + areaOrigin - intsec;
 
-    % calculate IoU
-    IoU = intsec ./ ground; % ground is always positive
+    % calculate IoU match matrix.
+    IoUMatch = (intsec ./ ground) > IoUthres; % ground is always positive
     
-    % calculate TP_cnt, which mean number of boxes in pred that found match
-    % in origin.
-    predFoundMatch = sum(IoU > IoUthres, 2); % each row is one record in pred.
-    
-    TP_cnt = sum(predFoundMatch > 0);
-    FP_cnt = totPred - TP_cnt;
-    FN_cnt = totOrigin - TP_cnt; % box in origin that hasn't been matched in pred.
-    
+    % row is pred, col is origin
+    boxesPred(sum(IoUMatch, 2) > 0, 5) = 4; %4 marks correct predict.
+    boxesPred(sum(IoUMatch, 2) <= 0, 5) = 3; % 3 marks false prediction.
+
+    boxesOrigin(sum(IoUMatch, 1) > 0, 5) = 1; % 1 marks picked origin.
+    boxesOrigin(sum(IoUMatch, 1) <= 0, 5) = 2; % 2 marks unpicked origin.
+
+    cmb = [boxesOrigin; boxesPred];
+    lastcol = cmb(:, 5)';
+    cnt1 = sum(lastcol == 1);
+    cnt2 = sum(lastcol == 2);
+    cnt3 = sum(lastcol == 3);
+    cnt4 = sum(lastcol == 4);
+
+    tbl = array2table(cmb, "VariableNames", {'cx', 'cy', 'width', 'height', 'marker'});
 end
