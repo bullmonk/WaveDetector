@@ -22,3 +22,5 @@ dependencies:
   - pytorch-cuda=11.8.0
   - skorch=0.15.0
   - ultralytics
+  - opencv=4.10.0
+  - pillow=11.1.0
