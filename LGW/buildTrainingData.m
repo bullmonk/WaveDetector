@@ -1,4 +1,4 @@
-function [] =  buildTrainingData(nfile)
+function [hf,encl_pts] =  buildTrainingData(nfile)
 
     % initialization
     rng(0)
@@ -22,7 +22,7 @@ function [] =  buildTrainingData(nfile)
         clf;
         setfigpos(gcf, [1  1 6 6]);
         fill([tmin tmin tmax tmax tmin],[fmin fmax fmax fmin fmin],blue,'LineStyle','none');
-        o=[];
+        encl_pts=[];
         barr=[];
         % draw shapes
         for j = 1:10
@@ -42,7 +42,7 @@ function [] =  buildTrainingData(nfile)
             fbnd=[farr(ind),fliplr(farr(ind))];
             barr{j}={tbnd,fbnd};
             polygon_point=[normT(tbnd),normF(fbnd)];
-            o=[o;polygon_point];
+            encl_pts=[encl_pts;polygon_point];
         end
 
         axis off
@@ -54,7 +54,7 @@ function [] =  buildTrainingData(nfile)
         saveeps(pngfile);
 
         txtfile=[thisfile,'_LGW.txt'];
-        save(txtfile,'o','-ascii');
+        save(txtfile,'encl_pts','-ascii');
 
 
         rgb = imread(pngfile);
@@ -75,5 +75,5 @@ function [] =  buildTrainingData(nfile)
         imwrite(rgbm,boxpngfile);
 
     end
-    close all;
+    % close all;
 end
