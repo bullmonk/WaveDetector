@@ -28,7 +28,8 @@ annotations = createArray(1,n,Like=example);
 
 for i=1:n
     BW = roipoly(img, cx(i,:), cy(i,:));
-    rle_code = RunLengthEncoding(BW);
+    stats = regionprops(BW, 'BoundingBox');
+    
 
     annotation.id = i;
     annotation.image_id = 1;

@@ -1,4 +1,4 @@
-function [hf,encl_pts] =  buildTrainingData(nfile)
+function [labels] =  buildTrainingData(nfile, imageFolder, labelFolder)
 
     % initialization
     rng(0)
@@ -18,12 +18,12 @@ function [hf,encl_pts] =  buildTrainingData(nfile)
     for i=1:nfile
 
         % create figure
-        hf=figure(1);
+        figure(1);
         clf;
         setfigpos(gcf, [1  1 6 6]);
         fill([tmin tmin tmax tmax tmin],[fmin fmax fmax fmin fmin],blue,'LineStyle','none');
-        encl_pts=[];
         barr=[];
+        labels = zeros(10, 89);
         % draw shapes
         for j = 1:10
             D1=randrange(5,20);
@@ -31,7 +31,7 @@ function [hf,encl_pts] =  buildTrainingData(nfile)
             f1=randrange(2000,10000);
             t2=t1+randrange(0.4,1);
             t0=t1-D1/sqrt(f1);
-            f2=(D1/(t2-t0)).^2;
+            % f2=(D1/(t2-t0)).^2;
             tarr=linspace(t1,t2,101);
             farr=(D1./(tarr-t0)).^2;
             hold on
@@ -41,39 +41,31 @@ function [hf,encl_pts] =  buildTrainingData(nfile)
             tbnd=[tarr(ind)-dtbnd/2,fliplr(tarr(ind)+dtbnd/2)];
             fbnd=[farr(ind),fliplr(farr(ind))];
             barr{j}={tbnd,fbnd};
-            polygon_point=[normT(tbnd),normF(fbnd)];
-            encl_pts=[encl_pts;polygon_point];
+
+            x = normT(tbnd);
+            y = 1-normF(fbnd);
+            pts = reshape([x;y], 1, []);
+            cx = (min(x) + max(x))/2;
+            cy = (min(y) + max(y))/2;
+            width = (max(x) - min(x));
+            height = (max(y) - min(y));
+            labels(j,:) = [0, cx, cy, width, height, pts];
+            % polygon_point=[normT(tbnd),normF(fbnd)];
         end
+        tbl = array2table(labels);
 
         axis off
         xlim([tmin, tmax]);
         ylim([fmin, fmax]);
 
-        thisfile=num2str(i,'LGW/LGW_%5.5d');
-        pngfile=[thisfile,'_LGW.png'];
+
+        thisfile=num2str(i,'LGW_%5.5d');
+
+        pngfile=fullfile(imageFolder, [thisfile '.png']);
         saveeps(pngfile);
-
-        txtfile=[thisfile,'_LGW.txt'];
-        save(txtfile,'encl_pts','-ascii');
-
-
-        rgb = imread(pngfile);
-        rgbm = RemoveWhiteSpace(rgb);
-        imwrite(rgbm,pngfile);
-
-        if nfile>1
-            continue
-        end
-
-        for k=1:length(barr)
-            plot(barr{k}{1}([1:end,1]),barr{k}{2}([1:end,1]),'-w','LineWidth',1);
-        end
-        boxpngfile=[thisfile,'_LGW_box.png'];
-        saveeps(boxpngfile)
-        rgb = imread(boxpngfile);
-        rgbm = RemoveWhiteSpace(rgb);
-        imwrite(rgbm,boxpngfile);
+        txtfile=fullfile(labelFolder, [thisfile '.txt']);
+        writetable(tbl, txtfile, 'Delimiter', ' ', 'WriteVariableNames', false);
 
     end
-    % close all;
+    close all;
 end

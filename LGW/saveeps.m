@@ -98,7 +98,7 @@ end
 if length(epsfile)>0
     disp(epsfile)
 
-    if(strcmp(epsfile([-3:0]+end),'.eps'))
+    if(strcmp(epsfile(end-3:end),'.eps'))
         epsfile2=[epsfile(1:end-4),'.pdf'];
 %         %print(fid,'-depsc','-painter','-adobecset',epsfile)
 %         %print(fid,'-depsc','-painters',epsfile); %fixeps(epsfile); % epsc color eps
