@@ -1,4 +1,4 @@
-[hf, encl_pts]=buildTrainingData(1);
+[labels]=buildTrainingData(1);
 
 figure(9)
 clf

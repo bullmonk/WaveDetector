@@ -22,12 +22,12 @@ function [labels] =  buildTrainingData(nfile, imageFolder, labelFolder)
         clf;
         setfigpos(gcf, [1  1 6 6]);
         fill([tmin tmin tmax tmax tmin],[fmin fmax fmax fmin fmin],blue,'LineStyle','none');
-        barr=[];
+        % barr=[];
         labels = zeros(10, 89);
         % draw shapes
-        for j = 1:10
+        for j = 1:10 % adjust this number to change number of shapes
             D1=randrange(5,20);
-            t1=0.1+(j-1)*0.5;
+            t1=0.1+(j-1)*0.5; % adjust this number to change space
             f1=randrange(2000,10000);
             t2=t1+randrange(0.4,1);
             t0=t1-D1/sqrt(f1);
@@ -40,7 +40,7 @@ function [labels] =  buildTrainingData(nfile, imageFolder, labelFolder)
             ind=1:5:length(tarr);
             tbnd=[tarr(ind)-dtbnd/2,fliplr(tarr(ind)+dtbnd/2)];
             fbnd=[farr(ind),fliplr(farr(ind))];
-            barr{j}={tbnd,fbnd};
+            % barr{j}={tbnd,fbnd};
 
             x = normT(tbnd);
             y = 1-normF(fbnd);
@@ -50,7 +50,6 @@ function [labels] =  buildTrainingData(nfile, imageFolder, labelFolder)
             width = (max(x) - min(x));
             height = (max(y) - min(y));
             labels(j,:) = [0, cx, cy, width, height, pts];
-            % polygon_point=[normT(tbnd),normF(fbnd)];
         end
         tbl = array2table(labels);
 
@@ -63,6 +62,10 @@ function [labels] =  buildTrainingData(nfile, imageFolder, labelFolder)
 
         pngfile=fullfile(imageFolder, [thisfile '.png']);
         saveeps(pngfile);
+        rgb = imread(pngfile);
+        rgbm = RemoveWhiteSpace(rgb);
+        imwrite(rgbm,pngfile);
+
         txtfile=fullfile(labelFolder, [thisfile '.txt']);
         writetable(tbl, txtfile, 'Delimiter', ' ', 'WriteVariableNames', false);
 
