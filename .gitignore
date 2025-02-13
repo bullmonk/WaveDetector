@@ -13,6 +13,7 @@
 **/*.txt
 **/*.png
 **/*.asv
+**/*.pt
 
 # jupyter
 **/*.ipynb

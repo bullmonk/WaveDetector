@@ -1,0 +1,12 @@
+# Define the paths to your training and validation datasets
+path: ./trail  # Base directory where images and labels are stored
+
+train: ./images/train      # Relative path from 'path' to training images
+val: ./images/val          # Relative path from 'path' to validation images
+
+# Number of object classes
+nc: 1  # Number of classes (modify according to your dataset)
+
+# Class names
+names: 
+  0: lgw  # Replace 'class1' with your actual class name
