@@ -64,7 +64,8 @@ function [labels] =  buildTrainingData(nfile, imageFolder, labelFolder, numPts, 
         saveeps(pngfile);
         rgb = imread(pngfile);
         rgbm = RemoveWhiteSpace(rgb);
-        imwrite(rgbm,pngfile);
+        rgbm = imresize(rgbm, [640 640]);
+        imwrite(rgbm, pngfile);
 
         txtfile=fullfile(labelFolder, [thisfile '.txt']);
         writetable(tbl, txtfile, 'Delimiter', ' ', 'WriteVariableNames', false);
