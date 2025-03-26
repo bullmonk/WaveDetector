@@ -4,7 +4,7 @@
 % 84 represents 42 x coordinates, and 42 y coordinates
 % x1,x2,x3...,x42, y1,y2,y3,...y42
 
-labels = buildTrainingData(1, 'exam', 'exam');
+labels = buildTrainingData(1, 'exam', 'exam', 201, 2);
 figure(9)
 clf
 img = imread('exam/LGW_00001.png');
@@ -15,8 +15,8 @@ sz=size(labels);
 nrec=sz(1);
 np=sz(2)/2;
 
-cx = labels(:, 6:2:89) * width;
-cy = labels(:, 7:2:89) * height;
+cx = labels(:, 6:2:169) * width;
+cy = labels(:, 7:2:169) * height;
 
 
 n = 10;

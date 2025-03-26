@@ -1,4 +1,4 @@
-function [labels] =  buildTrainingData(nfile, imageFolder, labelFolder)
+function [labels] =  buildTrainingData(nfile, imageFolder, labelFolder, numPts, numStrp)
 
     % initialization
     rng(0)
@@ -23,16 +23,16 @@ function [labels] =  buildTrainingData(nfile, imageFolder, labelFolder)
         setfigpos(gcf, [1  1 6 6]);
         fill([tmin tmin tmax tmax tmin],[fmin fmax fmax fmin fmin],blue,'LineStyle','none');
         % barr=[];
-        labels = zeros(10, 89);
+        labels = zeros(10, 4 * length(1:5:numPts) + 5);
         % draw shapes
-        for j = 1:10 % adjust this number to change number of shapes
+        for j = 1:numStrp % adjust this number to change number of shapes
             D1=randrange(5,20);
-            t1=0.1+(j-1)*0.5; % adjust this number to change space
+            t1=0.1+(j-1)*(5/numStrp); % adjust this number to change space
             f1=randrange(2000,10000);
             t2=t1+randrange(0.4,1);
             t0=t1-D1/sqrt(f1);
             % f2=(D1/(t2-t0)).^2;
-            tarr=linspace(t1,t2,101);
+            tarr=linspace(t1,t2,numPts);
             farr=(D1./(tarr-t0)).^2;
             hold on
             plot(tarr,farr,'color',red,'LineWidth',5);
