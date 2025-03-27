@@ -23,7 +23,7 @@ function [labels] =  buildTrainingData(nfile, imageFolder, labelFolder, numPts, 
         setfigpos(gcf, [1  1 6 6]);
         fill([tmin tmin tmax tmax tmin],[fmin fmax fmax fmin fmin],blue,'LineStyle','none');
         % barr=[];
-        labels = zeros(10, 4 * length(1:5:numPts) + 5);
+        labels = zeros(numStrp, 4 * length(1:5:numPts) + 1);
         % draw shapes
         for j = 1:numStrp % adjust this number to change number of shapes
             D1=randrange(5,20);
@@ -45,11 +45,11 @@ function [labels] =  buildTrainingData(nfile, imageFolder, labelFolder, numPts, 
             x = normT(tbnd);
             y = 1-normF(fbnd);
             pts = reshape([x;y], 1, []);
-            cx = (min(x) + max(x))/2;
-            cy = (min(y) + max(y))/2;
-            width = (max(x) - min(x));
-            height = (max(y) - min(y));
-            labels(j,:) = [0, cx, cy, width, height, pts];
+            % cx = (min(x) + max(x))/2;
+            % cy = (min(y) + max(y))/2;
+            % width = (max(x) - min(x));
+            % height = (max(y) - min(y));
+            labels(j,:) = [0, pts];
         end
         tbl = array2table(labels);
 

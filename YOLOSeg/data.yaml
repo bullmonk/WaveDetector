@@ -1,5 +1,5 @@
 # Define the paths to your training and validation datasets
-path: ./trail  # Base directory where images and labels are stored
+path: ./trail2  # Base directory where images and labels are stored
 
 train: ./images/train      # Relative path from 'path' to training images
 val: ./images/val          # Relative path from 'path' to validation images
