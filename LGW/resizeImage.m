@@ -4,9 +4,8 @@ function [] = resizeImage(fname, oname)
     rgbm = imresize(rgbm, [640 640]);
 
     if nargin < 2
-        imwrite(rgbm, fname);
-    else
-        imwrite(rgbm, oname);
+        oname = strrep(fname, "lgw1", "lgw2");
     end
+    imwrite(rgbm, oname);
 end
 

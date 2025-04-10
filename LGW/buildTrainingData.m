@@ -1,4 +1,5 @@
-function [labels] =  buildTrainingData(nfile, imageFolder, labelFolder, numPts, numStrp)
+function [labels] =  buildTrainingData(nfile, imageFolder, labelFolder, numPts, numStrp, strpSpace, ngap)
+% numStrp * strpSpace = 5 was a proper pre-assumption.
 
     % initialization
     rng(0)
@@ -27,7 +28,7 @@ function [labels] =  buildTrainingData(nfile, imageFolder, labelFolder, numPts, 
         % draw shapes
         for j = 1:numStrp % adjust this number to change number of shapes
             D1=randrange(5,20);
-            t1=0.1+(j-1)*(5/numStrp); % adjust this number to change space
+            t1=0.1+(j-1)*(strpSpace); % adjust this number to change space
             f1=randrange(2000,10000);
             t2=t1+randrange(0.4,1);
             t0=t1-D1/sqrt(f1);
@@ -35,7 +36,11 @@ function [labels] =  buildTrainingData(nfile, imageFolder, labelFolder, numPts, 
             tarr=linspace(t1,t2,numPts);
             farr=(D1./(tarr-t0)).^2;
             hold on
-            plot(tarr,farr,'color',red,'LineWidth',5);
+    		farr2=farr;
+		    % ngap=2 , 3, 4, round(randrange(1,5))
+		    farr2(floor(rand(1,ngap)*length(farr))+1)=NaN;
+
+            plot(tarr,farr2,'color',red,'LineWidth',5);
             dtbnd=0.08;
             ind=1:5:length(tarr);
             tbnd=[tarr(ind)-dtbnd/2,fliplr(tarr(ind)+dtbnd/2)];
