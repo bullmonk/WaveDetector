@@ -1,4 +1,4 @@
-tbl = pack('plotdata', 'segp');
+tbl = pack('plotdata', 'boxr');
 
 iouStr = tbl.Properties.VariableNames(2:end);
 iou = cellfun(@str2double, strrep(iouStr, '_', '.'));
@@ -19,5 +19,5 @@ hold off
 legend(lineHandles, legends, 'FontSize', 16);
 
 xlabel('IoU threshold', 'FontSize', 16);
-ylabel('segment precision', 'FontSize', 16);
-title('precision - IoU threshold');
+ylabel('segment recall', 'FontSize', 16);
+title('recall - IoU threshold');

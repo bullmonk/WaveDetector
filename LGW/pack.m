@@ -1,6 +1,7 @@
 function [tbl]=pack(folder, target)
     allitems = dir(folder);
     files = allitems(~[allitems.isdir]);
+    files = files(~strcmp({files.name}, '.DS_Store'));
     fnames = fullfile({files.folder}, {files.name});
 
     f = @(x, y) fetchJSON(x, y);
