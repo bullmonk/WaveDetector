@@ -1,6 +1,9 @@
 function [labels] =  buildTrainingData(nfile, imageFolder, labelFolder, numPts, numStrp, strpSpace, ngap)
 % numStrp * strpSpace = 5 was a proper pre-assumption.
 
+    % ngap = randi([2,4]);
+    % strpSpace = 0.1 + (0.5-0.1) * rand();
+
     % initialization
     rng(0)
     clcarr=jet(255);
